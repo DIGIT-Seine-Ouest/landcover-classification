@@ -1,6 +1,4 @@
-"""
-Gestion du territoire — polygones communes, bbox, grille de blocs WMS.
-"""
+"""Gestion du territoire — polygones communes, bbox, grille de blocs WMS."""
 
 import unicodedata
 from functools import lru_cache

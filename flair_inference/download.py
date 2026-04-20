@@ -1,6 +1,4 @@
-"""
-Téléchargement du modèle ONNX depuis HuggingFace Hub ou une URL directe.
-"""
+"""Téléchargement du modèle ONNX depuis HuggingFace Hub ou une URL directe."""
 
 import os
 import urllib.request
@@ -22,7 +20,7 @@ def download_model(
     ----------
     dest        : chemin de destination (fichier ou dossier)
     source      : "hf" (HuggingFace Hub) ou "url" (téléchargement direct)
-    hf_repo     : identifiant du dépôt HuggingFace (si source="hf")
+    hf_repo     : identifiant du dépôt HuggingFace
     hf_filename : nom du fichier dans le dépôt HF
     url         : URL directe (si source="url")
     force       : re-télécharge même si le fichier existe déjà
@@ -33,8 +31,8 @@ def download_model(
 
     Examples
     --------
-    >>> from cv_routes import download_model
-    >>> model_path = download_model()                      # HuggingFace (défaut)
+    >>> from flair_inference import download_model
+    >>> model_path = download_model()
     >>> model_path = download_model(dest="/tmp/flair.onnx")
     >>> model_path = download_model(source="url", url="https://…/flair.onnx")
     """
@@ -51,17 +49,15 @@ def download_model(
     if source == "hf":
         try:
             from huggingface_hub import hf_hub_download
+            import shutil
             path = hf_hub_download(repo_id=hf_repo, filename=hf_filename, local_dir=str(dest.parent))
-            # hf_hub_download peut placer le fichier dans un sous-dossier snapshots/
             if Path(path) != dest:
-                import shutil
                 shutil.copy2(path, dest)
             print(f"Modèle téléchargé (HF) : {dest}")
         except ImportError:
             raise ImportError(
                 "huggingface_hub est requis pour source='hf'.\n"
-                "  conda install -c conda-forge huggingface_hub\n"
-                "  ou : pip install huggingface_hub"
+                "  pip install huggingface_hub"
             )
 
     elif source == "url":

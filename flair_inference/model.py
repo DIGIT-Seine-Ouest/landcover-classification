@@ -1,6 +1,4 @@
-"""
-Modèle d'inférence ONNX — FLAIR-INC ResNet34-UNet.
-"""
+"""Modèle d'inférence ONNX — FLAIR-INC ResNet34-UNet."""
 
 import numpy as np
 import onnxruntime as ort
@@ -17,8 +15,8 @@ class FlairModel:
 
     Example
     -------
-    >>> model = FlairModel("models/flair_12cl_resnet34_unet.onnx")
-    >>> class_map = model.predict(arr255)   # (3, 512, 512) float32
+    >>> model = FlairModel("flair_12cl_resnet34_unet.onnx")
+    >>> class_map = model.predict(arr255)   # (3, 512, 512) float32 → (512, 512) uint8
     """
 
     NUM_CLASSES = 12

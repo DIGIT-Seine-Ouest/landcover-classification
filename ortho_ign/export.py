@@ -1,12 +1,5 @@
-"""
-Export des masques de détection.
+"""Export des masques : GeoTIFF géoréférencé, GeoPackage vectoriel, ZIP."""
 
-- GeoTIFF géoréférencé (masque binaire 0/1, EPSG:2154, compression LZW)
-- GeoPackage vectoriel (polygones route_flair)
-- ZIP de fichiers
-"""
-
-import glob
 import os
 import zipfile
 
@@ -22,11 +15,7 @@ def mask_to_geotiff(
     tile_path: str,
     output_path: str,
 ) -> str:
-    """
-    Exporte un masque binaire (H×W uint8, 0/1) en GeoTIFF géoréférencé.
-
-    Le CRS et la transformation sont repris depuis la tuile source.
-    """
+    """Exporte un masque binaire (H×W uint8, 0/1) en GeoTIFF géoréférencé."""
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with rasterio.open(tile_path) as src:
         meta = src.meta.copy()
@@ -42,13 +31,13 @@ def masks_to_gpkg(
     output_path: str,
 ) -> str:
     """
-    Vectorise plusieurs masques et les écrit dans un GeoPackage (une couche par masque).
+    Vectorise plusieurs masques dans un GeoPackage (une couche par masque).
 
     Parameters
     ----------
     masks       : { layer_name: mask_array (H×W uint8, 0/1) }
     tile_path   : tuile source — fournit la géotransformation EPSG:2154
-    output_path : chemin .gpkg (écrasé si existant)
+    output_path : chemin .gpkg
     """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     if os.path.exists(output_path):
@@ -85,10 +74,7 @@ def collect_mask_polys(
     return (existing or []) + polys
 
 
-def write_polys_to_gpkg(
-    layers: dict[str, list],
-    output_path: str,
-) -> str:
+def write_polys_to_gpkg(layers: dict[str, list], output_path: str) -> str:
     """Écrit un dict de couches de polygones dans un GeoPackage."""
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     if os.path.exists(output_path):
