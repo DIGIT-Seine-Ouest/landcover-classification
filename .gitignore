@@ -8,3 +8,4 @@ data/tiles/
 data/exports/
 models/*.onnx
 *.ipynb_checkpoints
+.space_build/

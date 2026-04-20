@@ -1,4 +1,11 @@
-"""Démo Gradio — détection de routes FLAIR-INC. Déployable sur HuggingFace Spaces."""
+"""Démo Gradio — détection de routes FLAIR-INC. Déployable sur HuggingFace Spaces.
+
+Structure attendue dans le repo HF Space :
+    app.py              ← ce fichier
+    ortho_ign/          ← package local
+    flair_inference/    ← package local
+    requirements.txt
+"""
 
 import numpy as np
 import gradio as gr
@@ -6,7 +13,10 @@ from PIL import Image
 
 from flair_inference import FlairModel, download_model, colorize, mask_from_classes, apply_overlay, class_stats
 from flair_inference.classes import INPUT_SIZE
-from use_cases.road_detection.config import ROAD_CLASSES, ROAD_COLOR
+
+# --- Config métier (inline pour déploiement standalone) ---
+ROAD_CLASSES: set[int] = {1, 2}   # pervious_surface + impervious_surface
+ROAD_COLOR:   tuple[int, int, int] = (255, 140, 0)
 
 MODEL_PATH = download_model()
 model      = FlairModel(MODEL_PATH)

@@ -8,7 +8,7 @@ from pathlib import Path
 def download_model(
     dest: str | os.PathLike = "flair_12cl_resnet34_unet.onnx",
     source: str = "hf",
-    hf_repo: str = "mandresyandri/road-landcover-detection",
+    hf_repo: str = "mandresyandri/flair-inc-onnx",
     hf_filename: str = "flair_12cl_resnet34_unet.onnx",
     url: str | None = None,
     force: bool = False,

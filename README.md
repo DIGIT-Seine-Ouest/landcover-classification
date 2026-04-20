@@ -138,7 +138,8 @@ from flair_inference import download_model
 model_path = download_model()   # depuis HuggingFace Hub
 ```
 
-Le modèle `flair_12cl_resnet34_unet.onnx` est hébergé sur [`mandresyandri/road-landcover-detection`](https://huggingface.co/mandresyandri/road-landcover-detection).
+Le modèle `flair_12cl_resnet34_unet.onnx` est hébergé sur [`mandresyandri/flair-inc-onnx`](https://huggingface.co/mandresyandri/flair-inc-onnx).
+C'est une conversion ONNX du modèle officiel [`IGNF/FLAIR-INC_rgb_12cl_resnet34-unet`](https://huggingface.co/IGNF/FLAIR-INC_rgb_12cl_resnet34-unet) (licence Etalab 2.0).
 
 ---
 
