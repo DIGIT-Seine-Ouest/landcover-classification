@@ -9,3 +9,4 @@ data/exports/
 models/*.onnx
 *.ipynb_checkpoints
 .space_build/
+CLAUDE.md

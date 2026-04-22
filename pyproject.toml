@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 # ---------------------------------------------------------------------------
 # ortho_ign — lib acquisition ortho-photos IGN (WMS, tiling, territoire)
@@ -28,7 +28,7 @@ flair = [
     "onnxruntime>=1.16",
 ]
 hf    = ["huggingface_hub>=0.20"]
-dev   = ["pytest>=7", "pytest-cov"]
+dev   = ["pytest>=7", "pytest-cov", "ipykernel>=6"]
 full  = ["onnxruntime>=1.16", "huggingface_hub>=0.20", "matplotlib>=3.8", "gradio>=4.0"]
 
 [tool.setuptools.packages.find]
