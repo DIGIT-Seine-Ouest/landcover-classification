@@ -1,12 +1,13 @@
 """Récupération des tuiles WMS pour une commune (avec cache local)."""
 
 import glob
+import math
 import os
 from collections.abc import Callable
 
 from ortho_ign.territory import load_commune_polygons, commune_bbox, grid_blocks
 from ortho_ign.wms import fetch_wms, IGN_WMS_URL, IGN_WMS_LAYER, IGN_WMS_CRS, IGN_BLOCK_M
-from ortho_ign.tiling import tile_raster
+from ortho_ign.tiling import tile_raster, TILE_SIZE
 
 ProgressCallback = Callable[[float, str], None]
 
@@ -55,12 +56,16 @@ def fetch_city_tiles(
 
     for i, (bx_min, by_min, bx_max, by_max) in enumerate(blocks):
         _prog(i / n, f"Bloc {i + 1}/{n} — {commune_name}…")
-        px_w = min(max(1, round((bx_max - bx_min) / 0.20)), 4096)
-        px_h = min(max(1, round((by_max - by_min) / 0.20)), 4096)
+        bxi_min, byi_min = int(bx_min), int(by_min)
+        bxi_max, byi_max = int(bx_max), int(by_max)
+        # Arrondi au multiple supérieur de TILE_SIZE pour que chaque bloc soit
+        # exactement divisible en tuiles 512×512 sans pixel de bord orphelin.
+        px_w = min(math.ceil(round((bxi_max - bxi_min) / 0.20) / TILE_SIZE) * TILE_SIZE, 4096)
+        px_h = min(math.ceil(round((byi_max - byi_min) / 0.20) / TILE_SIZE) * TILE_SIZE, 4096)
 
         src = fetch_wms(
             wms_url, wms_layer,
-            (int(bx_min), int(by_min), int(bx_max), int(by_max)),
+            (bxi_min, byi_min, bxi_max, byi_max),
             wms_crs, px_w, px_h,
         )
         block_tiles = tile_raster(

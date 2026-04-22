@@ -8,7 +8,7 @@ from rasterio.transform import from_bounds
 IGN_WMS_URL   = "https://data.geopf.fr/wms-r/wms"
 IGN_WMS_LAYER = "ORTHOIMAGERY.ORTHOPHOTOS"
 IGN_WMS_CRS   = "EPSG:2154"
-IGN_BLOCK_M   = 800  # 0.20 m/px → 800 m = 4096 px
+IGN_BLOCK_M   = 800  # 0.20 m/px → 800 m ≈ 4000 px, arrondi à 4096 px (8×512) dans fetch.py
 
 
 def fetch_wms(
